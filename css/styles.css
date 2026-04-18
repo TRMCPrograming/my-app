@@ -1,0 +1,346 @@
+/* ─────────────────────────────────────────
+   CSS Custom Properties (Design Tokens)
+───────────────────────────────────────── */
+:root {
+  --gold:    #C9A84C;
+  --deep:    #1A1025;
+  --mid:     #2D1F45;
+  --light:   #F5EFE0;
+  --muted:   #9B8BAA;
+  --accent:  #7B4FA6;
+  --white:   #FFFFFF;
+  --radius:  18px;
+
+  --transition-page: transform .32s cubic-bezier(.4, 0, .2, 1);
+  --transition-card: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* ─────────────────────────────────────────
+   Reset & Base
+───────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--deep);
+  color: var(--light);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────
+   Home Screen
+───────────────────────────────────────── */
+#home-screen {
+  padding-bottom: 32px;
+}
+
+/* ─────────────────────────────────────────
+   App Header / Splash
+───────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 60%, #0D0819 100%);
+  padding: 52px 24px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-cross {
+  font-size: 2rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 12px rgba(201,168,76,.5));
+}
+
+.app-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  line-height: 1.15;
+  color: var(--white);
+  letter-spacing: .01em;
+}
+
+.app-sub {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.theme-badge {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 5px 16px;
+  border: 1px solid rgba(201,168,76,.4);
+  border-radius: 100px;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─────────────────────────────────────────
+   Hero / Key Verse Block
+───────────────────────────────────────── */
+.hero-verse {
+  background: linear-gradient(135deg, #2D1F45, #1A1025);
+  margin: 16px 16px 0;
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  border: 1px solid rgba(201,168,76,.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-verse::after {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  color: rgba(201,168,76,.08);
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hero-verse p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--light);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-ref {
+  display: block;
+  margin-top: 12px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   Section Label
+───────────────────────────────────────── */
+.section-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 20px 20px 10px;
+}
+
+/* ─────────────────────────────────────────
+   Category Index Grid
+───────────────────────────────────────── */
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px 24px;
+}
+
+.cat-card {
+  background: var(--mid);
+  border-radius: 14px;
+  padding: 18px 14px 16px;
+  border: 1px solid rgba(255,255,255,.06);
+  cursor: pointer;
+  transition: var(--transition-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Full-width card modifier */
+.cat-card.full-width {
+  grid-column: span 2;
+}
+
+.cat-card:active {
+  transform: scale(.96);
+}
+
+.cat-card:hover {
+  border-color: rgba(201,168,76,.35);
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+}
+
+.cat-card .cat-icon {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cat-card .cat-name {
+  font-family: 'Playfair Display', serif;
+  font-size: .92rem;
+  color: var(--white);
+  line-height: 1.25;
+}
+
+.cat-card .cat-count {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Colored bottom bar per category */
+.cat-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cat-color, var(--gold));
+  opacity: .6;
+  border-radius: 0 0 14px 14px;
+}
+
+/* ─────────────────────────────────────────
+   Verse Page (slide-in panel)
+───────────────────────────────────────── */
+.page {
+  position: fixed;
+  inset: 0;
+  background: var(--deep);
+  transform: translateX(100%);
+  transition: var(--transition-page);
+  z-index: 100;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page.active {
+  transform: translateX(0);
+}
+
+/* ─────────────────────────────────────────
+   Verse Page Header (sticky)
+───────────────────────────────────────── */
+.page-header {
+  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 100%);
+  padding: 52px 20px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: 'Lato', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 14px;
+}
+
+.page-icon {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  color: var(--white);
+  line-height: 1.15;
+}
+
+/* ─────────────────────────────────────────
+   Individual Verse Cards
+───────────────────────────────────────── */
+.verse-list {
+  padding: 16px 16px 48px;
+}
+
+.verse-card {
+  background: var(--mid);
+  border-radius: 14px;
+  padding: 20px 18px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,.06);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Large ghost number watermark */
+.verse-card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: rgba(201,168,76,.10);
+  line-height: 1;
+  font-style: italic;
+}
+
+.verse-ref {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.verse-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: .97rem;
+  line-height: 1.7;
+  color: var(--light);
+}
+
+/* ─────────────────────────────────────────
+   Responsive — larger phones / tablets
+───────────────────────────────────────── */
+@media (min-width: 480px) {
+  .app-title   { font-size: 2.2rem; }
+  .hero-verse p { font-size: 1.15rem; }
+  .cat-card .cat-name { font-size: 1rem; }
+  .verse-text  { font-size: 1.05rem; }
+}
