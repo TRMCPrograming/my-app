@@ -303,6 +303,19 @@ body {
   border: 1px solid rgba(255,255,255,.06);
   position: relative;
   overflow: hidden;
+  /* ── NEW: make cards clickable ── */
+  cursor: pointer;
+  transition: var(--transition-card);
+}
+
+.verse-card:hover {
+  border-color: rgba(201,168,76,.35);
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  transform: translateY(-2px);
+}
+
+.verse-card:active {
+  transform: scale(.97);
 }
 
 /* Large ghost number watermark */
@@ -335,6 +348,16 @@ body {
   color: var(--light);
 }
 
+/* ── NEW: tap hint on each verse card ── */
+.verse-tap-hint {
+  display: block;
+  margin-top: 10px;
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,.5);
+}
+
 /* ─────────────────────────────────────────
    Responsive — larger phones / tablets
 ───────────────────────────────────────── */
@@ -343,4 +366,198 @@ body {
   .hero-verse p { font-size: 1.15rem; }
   .cat-card .cat-name { font-size: 1rem; }
   .verse-text  { font-size: 1.05rem; }
+}
+
+
+/* ═════════════════════════════════════════
+   NEW ADDITIONS — Upgrades
+═════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────
+   Verse Focus Overlay (full-screen)
+───────────────────────────────────────── */
+#verse-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+#verse-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.overlay-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.35) saturate(.7);
+}
+
+.overlay-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2px);
+  background: rgba(15,8,28,.55);
+}
+
+.overlay-content {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+
+.overlay-ref {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.overlay-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: var(--white);
+  text-shadow: 0 2px 20px rgba(0,0,0,.6);
+}
+
+.overlay-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+  padding: 10px 24px;
+  border: 1px solid rgba(201,168,76,.5);
+  border-radius: 100px;
+  background: rgba(201,168,76,.1);
+  color: var(--gold);
+  font-family: 'Lato', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.overlay-close:hover {
+  background: rgba(201,168,76,.25);
+}
+
+/* ─────────────────────────────────────────
+   Welcome Popup (Jesus image)
+───────────────────────────────────────── */
+#welcome-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 5, 20, .75);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+
+#welcome-popup.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.welcome-card {
+  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 100%);
+  border: 1px solid rgba(201,168,76,.3);
+  border-radius: 24px;
+  max-width: 360px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6), 0 0 0 1px rgba(201,168,76,.1);
+  transform: scale(.92) translateY(16px);
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+#welcome-popup.active .welcome-card {
+  transform: scale(1) translateY(0);
+}
+
+.welcome-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.welcome-body {
+  padding: 22px 24px 24px;
+  text-align: center;
+}
+
+.welcome-icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.welcome-message {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--light);
+  margin-bottom: 6px;
+}
+
+.welcome-sub {
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.welcome-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--gold), #a87c30);
+  border: none;
+  border-radius: 100px;
+  color: #1A1025;
+  font-family: 'Lato', sans-serif;
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(201,168,76,.35);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.welcome-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,168,76,.45);
+}
+
+.welcome-btn:active {
+  transform: scale(.96);
 }
