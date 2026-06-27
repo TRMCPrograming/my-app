@@ -8,633 +8,186 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-/* ─────────────────────────────────────────
-   CSS Custom Properties (Design Tokens)
-───────────────────────────────────────── */
+/* ── Design Tokens ── */
 :root {
-  --gold:    #C9A84C;
-  --deep:    #1A1025;
-  --mid:     #2D1F45;
-  --light:   #F5EFE0;
-  --muted:   #9B8BAA;
-  --accent:  #7B4FA6;
-  --white:   #FFFFFF;
-  --radius:  18px;
-
-  --transition-page: transform .32s cubic-bezier(.4, 0, .2, 1);
-  --transition-card: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-
-/* ─────────────────────────────────────────
-   Reset & Base
-───────────────────────────────────────── */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  height: 100%;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-  background: var(--deep);
-  color: var(--light);
-  min-height: 100dvh;
-  overflow-x: hidden;
-}
-
-/* ─────────────────────────────────────────
-   Home Screen
-───────────────────────────────────────── */
-#home-screen {
-  padding-bottom: 32px;
-}
-
-/* ─────────────────────────────────────────
-   App Header / Splash
-───────────────────────────────────────── */
-.app-header {
-  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 60%, #0D0819 100%);
-  padding: 52px 24px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.app-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,.18) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.header-cross {
-  font-size: 2rem;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 12px rgba(201,168,76,.5));
-}
-
-.app-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.85rem;
-  line-height: 1.15;
-  color: var(--white);
-  letter-spacing: .01em;
-}
-
-.app-sub {
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-top: 8px;
-}
-
-.theme-badge {
-  display: inline-block;
-  margin-top: 14px;
-  padding: 5px 16px;
-  border: 1px solid rgba(201,168,76,.4);
-  border-radius: 100px;
-  font-size: .72rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ─────────────────────────────────────────
-   Hero / Key Verse Block
-───────────────────────────────────────── */
-.hero-verse {
-  background: linear-gradient(135deg, #2D1F45, #1A1025);
-  margin: 16px 16px 0;
-  border-radius: var(--radius);
-  padding: 24px 22px;
-  border: 1px solid rgba(201,168,76,.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-verse::after {
-  content: '\201C';
-  font-family: 'Playfair Display', serif;
-  font-size: 8rem;
-  color: rgba(201,168,76,.08);
-  position: absolute;
-  top: -10px;
-  left: 10px;
-  line-height: 1;
-  pointer-events: none;
-}
-
-.hero-verse p {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: var(--light);
-  position: relative;
-  z-index: 1;
-}
-
-.hero-ref {
-  display: block;
-  margin-top: 12px;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-/* ─────────────────────────────────────────
-   Section Label
-───────────────────────────────────────── */
-.section-label {
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 20px 20px 10px;
-}
-
-/* ─────────────────────────────────────────
-   Category Index Grid
-───────────────────────────────────────── */
-.category-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 0 16px 24px;
-}
-
-.cat-card {
-  background: var(--mid);
-  border-radius: 14px;
-  padding: 18px 14px 16px;
-  border: 1px solid rgba(255,255,255,.06);
-  cursor: pointer;
-  transition: var(--transition-card);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Full-width card modifier */
-.cat-card.full-width {
-  grid-column: span 2;
-}
-
-.cat-card:active {
-  transform: scale(.96);
-}
-
-.cat-card:hover {
-  border-color: rgba(201,168,76,.35);
-  box-shadow: 0 4px 24px rgba(0,0,0,.3);
-}
-
-.cat-card .cat-icon {
-  font-size: 1.6rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.cat-card .cat-name {
-  font-family: 'Playfair Display', serif;
-  font-size: .92rem;
-  color: var(--white);
-  line-height: 1.25;
-}
-
-.cat-card .cat-count {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-/* Colored bottom bar per category */
-.cat-card::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--cat-color, var(--gold));
-  opacity: .6;
-  border-radius: 0 0 14px 14px;
-}
-
-/* ─────────────────────────────────────────
-   Verse Page (slide-in panel)
-───────────────────────────────────────── */
-.page {
-  position: fixed;
-  inset: 0;
-  background: var(--deep);
-  transform: translateX(100%);
-  transition: var(--transition-page);
-  z-index: 100;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.page.active {
-  transform: translateX(0);
-}
-
-/* ─────────────────────────────────────────
-   Verse Page Header (sticky)
-───────────────────────────────────────── */
-.page-header {
-  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 100%);
-  padding: 52px 20px 24px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  color: var(--gold);
-  font-family: 'Lato', sans-serif;
-  font-size: .82rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 14px;
-}
-
-.page-icon {
-  font-size: 1.6rem;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.page-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.7rem;
-  color: var(--white);
-  line-height: 1.15;
-}
-
-/* ─────────────────────────────────────────
-   Individual Verse Cards
-───────────────────────────────────────── */
-.verse-list {
-  padding: 16px 16px 48px;
-}
-
-.verse-card {
-  background: var(--mid);
-  border-radius: 14px;
-  padding: 20px 18px;
-  margin-bottom: 12px;
-  border: 1px solid rgba(255,255,255,.06);
-  position: relative;
-  overflow: hidden;
-  /* ── NEW: make cards clickable ── */
-  cursor: pointer;
-  transition: var(--transition-card);
-}
-
-.verse-card:hover {
-  border-color: rgba(201,168,76,.35);
-  box-shadow: 0 4px 24px rgba(0,0,0,.3);
-  transform: translateY(-2px);
-}
-
-.verse-card:active {
-  transform: scale(.97);
-}
-
-/* Large ghost number watermark */
-.verse-card::before {
-  content: attr(data-num);
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  color: rgba(201,168,76,.10);
-  line-height: 1;
-  font-style: italic;
-}
-
-.verse-ref {
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-
-.verse-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: .97rem;
-  line-height: 1.7;
-  color: var(--light);
-}
-
-/* ── NEW: tap hint on each verse card ── */
-.verse-tap-hint {
-  display: block;
-  margin-top: 10px;
-  font-size: .62rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: rgba(201,168,76,.5);
-}
-
-/* ─────────────────────────────────────────
-   Responsive — larger phones / tablets
-───────────────────────────────────────── */
-@media (min-width: 480px) {
-  .app-title   { font-size: 2.2rem; }
-  .hero-verse p { font-size: 1.15rem; }
-  .cat-card .cat-name { font-size: 1rem; }
-  .verse-text  { font-size: 1.05rem; }
-}
-
-
-/* ═════════════════════════════════════════
-   NEW ADDITIONS — Upgrades
-═════════════════════════════════════════ */
-
-/* ─────────────────────────────────────────
-   Verse Focus Overlay (full-screen)
-───────────────────────────────────────── */
-#verse-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .35s ease;
-}
-
-#verse-overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.overlay-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(.35) saturate(.7);
-}
-
-.overlay-blur {
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(2px);
-  background: rgba(15,8,28,.55);
-}
-
-.overlay-content {
-  position: relative;
-  z-index: 2;
-  max-width: 520px;
-  width: 100%;
-  text-align: center;
-}
-
-.overlay-ref {
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-  display: block;
-}
-
-.overlay-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.25rem;
-  line-height: 1.75;
-  color: var(--white);
-  text-shadow: 0 2px 20px rgba(0,0,0,.6);
-}
-
-.overlay-close {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 28px;
-  padding: 10px 24px;
-  border: 1px solid rgba(201,168,76,.5);
-  border-radius: 100px;
-  background: rgba(201,168,76,.1);
-  color: var(--gold);
-  font-family: 'Lato', sans-serif;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background .2s ease;
-}
-
-.overlay-close:hover {
-  background: rgba(201,168,76,.25);
-}
-
-/* ─────────────────────────────────────────
-   Welcome Popup (Jesus image)
-───────────────────────────────────────── */
-#welcome-popup {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(10, 5, 20, .75);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .4s ease;
-}
-
-#welcome-popup.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.welcome-card {
-  background: linear-gradient(160deg, #2D1F45 0%, #1A1025 100%);
-  border: 1px solid rgba(201,168,76,.3);
-  border-radius: 24px;
-  max-width: 360px;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0,0,0,.6), 0 0 0 1px rgba(201,168,76,.1);
-  transform: scale(.92) translateY(16px);
-  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
-}
-
-#welcome-popup.active .welcome-card {
-  transform: scale(1) translateY(0);
-}
-
-.welcome-image {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-
-.welcome-body {
-  padding: 22px 24px 24px;
-  text-align: center;
-}
-
-.welcome-icon {
-  font-size: 1.4rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.welcome-message {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.08rem;
-  line-height: 1.6;
-  color: var(--light);
-  margin-bottom: 6px;
-}
-
-.welcome-sub {
-  font-size: .72rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-
-.welcome-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: linear-gradient(135deg, var(--gold), #a87c30);
-  border: none;
-  border-radius: 100px;
-  color: #1A1025;
-  font-family: 'Lato', sans-serif;
-  font-size: .82rem;
-  font-weight: 900;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(201,168,76,.35);
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-
-.welcome-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(201,168,76,.45);
-}
-
-.welcome-btn:active {
-  transform: scale(.96);
-}
-
-/* ── Jeremiah verse above the popup card ── */
-.welcome-verse-top {
-  text-align: center;
-  max-width: 360px;
-  width: 100%;
-  padding: 0 8px 16px;
-}
-
-.welcome-top-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: .95rem;
-  line-height: 1.6;
-  color: var(--light);
-  text-shadow: 0 1px 8px rgba(0,0,0,.5);
-}
-
-.welcome-top-ref {
-  display: block;
-  margin-top: 8px;
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-/* ── Page nav row (Back + Home) ── */
-.page-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.home-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(201,168,76,.1);
-  border: 1px solid rgba(201,168,76,.3);
-  border-radius: 100px;
-  color: var(--gold);
-  font-family: 'Lato', sans-serif;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 6px 14px;
-  transition: background .15s ease;
-}
-
-.home-btn:hover {
-  background: rgba(201,168,76,.22);
+  --gold:#C9A84C;--deep:#1A1025;--mid:#2D1F45;--light:#F5EFE0;
+  --muted:#9B8BAA;--accent:#7B4FA6;--white:#FFFFFF;--radius:18px;
+  --transition-page:transform .32s cubic-bezier(.4,0,.2,1);
+  --transition-card:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{font-family:'Lato',sans-serif;background:var(--deep);color:var(--light);min-height:100dvh;overflow-x:hidden;}
+
+/* ── Home Screen ── */
+#home-screen{padding-bottom:32px;}
+.app-header{background:linear-gradient(160deg,#2D1F45 0%,#1A1025 60%,#0D0819 100%);padding:36px 24px 20px;text-align:center;position:relative;overflow:hidden;}
+.app-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.18) 0%,transparent 70%);pointer-events:none;}
+.header-cross{font-size:2rem;color:var(--gold);display:block;filter:drop-shadow(0 0 12px rgba(201,168,76,.5));}
+
+/* ── Daily Verse ── */
+.daily-verse-block{margin:14px 16px 0;border-radius:var(--radius);padding:20px 20px 16px;border:1px solid rgba(201,168,76,.25);background:linear-gradient(135deg,#2D1F45,#1A1025);position:relative;overflow:hidden;}
+.daily-verse-block::after{content:'\201C';font-family:'Playfair Display',serif;font-size:7rem;color:rgba(201,168,76,.07);position:absolute;top:-10px;left:8px;line-height:1;pointer-events:none;}
+.daily-label{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.daily-label span{background:rgba(201,168,76,.15);padding:2px 8px;border-radius:100px;}
+.daily-verse-text{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;line-height:1.65;color:var(--light);position:relative;z-index:1;}
+.daily-verse-ref{display:block;margin-top:10px;font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+
+/* ── Progress Bar ── */
+.progress-block{margin:14px 16px 0;background:var(--mid);border-radius:14px;padding:14px 18px;border:1px solid rgba(255,255,255,.06);}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.progress-count{font-size:.72rem;font-weight:700;color:var(--gold);}
+.progress-bar-track{height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#a87c30);border-radius:100px;transition:width .6s ease;}
+
+/* ── Favourites Section ── */
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:18px 20px 10px;}
+#favourites-section{display:none;}
+.fav-scroll{display:flex;gap:10px;padding:0 16px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.fav-scroll::-webkit-scrollbar{display:none;}
+.fav-chip{flex-shrink:0;background:var(--mid);border:1px solid rgba(201,168,76,.25);border-radius:100px;padding:8px 14px;font-size:.72rem;color:var(--light);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:var(--transition-card);}
+.fav-chip:hover{border-color:rgba(201,168,76,.5);background:#3a2a5a;}
+.fav-chip .fav-remove{color:var(--gold);font-size:.8rem;opacity:.7;}
+
+/* ── Category Grid ── */
+.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 24px;}
+.cat-card{background:var(--mid);border-radius:14px;padding:18px 14px 16px;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:var(--transition-card);position:relative;overflow:hidden;}
+.cat-card.full-width{grid-column:span 2;}
+.cat-card:active{transform:scale(.96);}
+.cat-card:hover{border-color:rgba(201,168,76,.35);box-shadow:0 4px 24px rgba(0,0,0,.3);}
+.cat-card .cat-icon{font-size:1.6rem;display:block;margin-bottom:8px;}
+.cat-card .cat-name{font-family:'Playfair Display',serif;font-size:.92rem;color:var(--white);line-height:1.25;}
+.cat-card .cat-count{display:inline-block;margin-top:6px;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+.cat-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--cat-color,var(--gold));opacity:.6;border-radius:0 0 14px 14px;}
+.cat-card .cat-progress-mini{display:block;margin-top:6px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;}
+.cat-card .cat-progress-mini-fill{height:100%;background:var(--cat-color,var(--gold));border-radius:100px;opacity:.7;transition:width .4s ease;}
+
+/* ── Verse Page ── */
+.page{position:fixed;inset:0;background:var(--deep);transform:translateX(100%);transition:var(--transition-page);z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.page.active{transform:translateX(0);}
+.page-header{background:linear-gradient(160deg,#2D1F45 0%,#1A1025 100%);padding:48px 20px 20px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.07);}
+.page-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--gold);font-family:'Lato',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:0;}
+.home-btn{display:flex;align-items:center;gap:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:100px;color:var(--gold);font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:6px 14px;transition:background .15s ease;}
+.home-btn:hover{background:rgba(201,168,76,.22);}
+.page-icon{font-size:1.6rem;display:block;margin-bottom:4px;}
+.page-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--white);line-height:1.15;}
+
+/* ── Verse Cards ── */
+.verse-list{padding:16px 16px 48px;}
+.verse-card{background:var(--mid);border-radius:14px;padding:20px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;cursor:pointer;transition:var(--transition-card);}
+.verse-card:hover{border-color:rgba(201,168,76,.35);box-shadow:0 4px 24px rgba(0,0,0,.3);transform:translateY(-2px);}
+.verse-card:active{transform:scale(.97);}
+.verse-card::before{content:attr(data-num);position:absolute;top:14px;right:16px;font-family:'Playfair Display',serif;font-size:2.5rem;color:rgba(201,168,76,.10);line-height:1;font-style:italic;}
+.verse-ref{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.verse-text{font-family:'Playfair Display',serif;font-style:italic;font-size:.97rem;line-height:1.7;color:var(--light);}
+.verse-actions{display:flex;gap:8px;margin-top:12px;align-items:center;}
+.verse-tap-hint{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,168,76,.5);flex:1;}
+.fav-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;padding:2px 4px;transition:transform .15s ease;}
+.fav-btn:active{transform:scale(1.3);}
+.read-aloud-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px 4px;color:var(--muted);transition:color .15s ease;}
+.read-aloud-btn.speaking{color:var(--gold);}
+.share-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px 4px;color:var(--muted);transition:color .15s ease;}
+.share-btn:hover{color:var(--gold);}
+
+/* ── Verse Focus Overlay ── */
+#verse-overlay{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .35s ease;}
+#verse-overlay.active{opacity:1;pointer-events:all;}
+.overlay-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.35) saturate(.7);}
+.overlay-blur{position:absolute;inset:0;backdrop-filter:blur(2px);background:rgba(15,8,28,.55);}
+.overlay-content{position:relative;z-index:2;max-width:520px;width:100%;text-align:center;}
+.overlay-ref{font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:block;}
+.overlay-text{font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;line-height:1.75;color:var(--white);text-shadow:0 2px 20px rgba(0,0,0,.6);}
+.overlay-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+.overlay-close,.overlay-share-btn,.overlay-aloud-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border:1px solid rgba(201,168,76,.5);border-radius:100px;background:rgba(201,168,76,.1);color:var(--gold);font-family:'Lato',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s ease;}
+.overlay-close:hover,.overlay-share-btn:hover,.overlay-aloud-btn:hover{background:rgba(201,168,76,.25);}
+.overlay-aloud-btn.speaking{background:rgba(201,168,76,.3);}
+
+/* ── Quiz Modal ── */
+#quiz-modal{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,5,20,.85);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s ease;}
+#quiz-modal.active{opacity:1;pointer-events:all;}
+.quiz-card{background:linear-gradient(160deg,#2D1F45 0%,#1A1025 100%);border:1px solid rgba(201,168,76,.3);border-radius:24px;max-width:400px;width:100%;padding:28px 24px;box-shadow:0 24px 64px rgba(0,0,0,.6);}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.quiz-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+.quiz-score{font-size:.72rem;font-weight:700;color:var(--muted);}
+.quiz-question{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;line-height:1.6;color:var(--light);margin:14px 0 18px;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-option{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;font-family:'Lato',sans-serif;font-size:.85rem;color:var(--light);cursor:pointer;text-align:left;transition:border-color .15s ease,background .15s ease;}
+.quiz-option:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.07);}
+.quiz-option.correct{border-color:#10B981;background:rgba(16,185,129,.15);color:#6ee7b7;}
+.quiz-option.wrong{border-color:#EF4444;background:rgba(239,68,68,.12);color:#fca5a5;}
+.quiz-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+.quiz-close-btn,.quiz-next-btn{padding:9px 20px;border-radius:100px;font-family:'Lato',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .15s ease;}
+.quiz-close-btn{background:none;border:1px solid rgba(255,255,255,.15);color:var(--muted);}
+.quiz-close-btn:hover{background:rgba(255,255,255,.05);}
+.quiz-next-btn{background:linear-gradient(135deg,var(--gold),#a87c30);border:none;color:#1A1025;display:none;}
+.quiz-next-btn.show{display:block;}
+.quiz-result{text-align:center;padding:10px 0;}
+.quiz-result-emoji{font-size:3rem;display:block;margin-bottom:10px;}
+.quiz-result-text{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--light);}
+.quiz-result-score{font-size:.8rem;color:var(--gold);margin-top:6px;display:block;}
+
+/* ── Story Panel ── */
+#story-panel{position:fixed;inset:0;z-index:350;background:var(--deep);transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+#story-panel.active{transform:translateY(0);}
+.story-header{padding:48px 20px 16px;background:linear-gradient(160deg,#2D1F45,#1A1025);position:sticky;top:0;z-index:2;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:flex-end;}
+.story-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);}
+.story-close-btn{background:none;border:none;color:var(--gold);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;}
+.story-body{padding:20px 16px 48px;}
+.story-card{background:var(--mid);border-radius:14px;margin-bottom:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);}
+.story-card-img{width:100%;height:180px;object-fit:cover;display:block;background:linear-gradient(135deg,#2D1F45,#1A1025);}
+.story-card-img-placeholder{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(123,79,166,.15));}
+.story-card-body{padding:16px 18px 18px;}
+.story-card-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);margin-bottom:6px;}
+.story-card-text{font-size:.88rem;line-height:1.65;color:var(--muted);}
+
+/* ── Toast Notification ── */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);backdrop-filter:blur(12px);border-radius:100px;padding:10px 22px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);z-index:600;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;opacity:0;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ── Quiz + Story trigger buttons on verse page ── */
+.page-actions{display:flex;gap:10px;padding:14px 16px 0;flex-wrap:wrap;}
+.page-action-btn{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 12px;border-radius:12px;font-family:'Lato',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:var(--transition-card);}
+.quiz-trigger-btn{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.35);color:#c4b5fd;}
+.quiz-trigger-btn:hover{background:rgba(139,92,246,.25);}
+.story-trigger-btn{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold);}
+.story-trigger-btn:hover{background:rgba(201,168,76,.2);}
+
+/* ── Welcome popup ── */
+#welcome-popup{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:rgba(10,5,20,.75);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s ease;}
+#welcome-popup.active{opacity:1;pointer-events:all;}
+.welcome-verse-top{text-align:center;max-width:360px;width:100%;padding:0 8px 14px;}
+.welcome-top-text{font-family:'Playfair Display',serif;font-style:italic;font-size:.92rem;line-height:1.6;color:var(--light);text-shadow:0 1px 8px rgba(0,0,0,.5);}
+.welcome-top-ref{display:block;margin-top:6px;font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+.welcome-card{background:linear-gradient(160deg,#2D1F45 0%,#1A1025 100%);border:1px solid rgba(201,168,76,.3);border-radius:24px;max-width:360px;width:100%;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.6);transform:scale(.92) translateY(16px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+#welcome-popup.active .welcome-card{transform:scale(1) translateY(0);}
+.welcome-image{width:100%;height:240px;object-fit:cover;object-position:center top;display:block;}
+.welcome-body{padding:20px 24px 24px;text-align:center;}
+.welcome-icon{font-size:1.4rem;display:block;margin-bottom:8px;}
+.welcome-message{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;line-height:1.6;color:var(--light);margin-bottom:6px;}
+.welcome-sub{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.welcome-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,var(--gold),#a87c30);border:none;border-radius:100px;color:#1A1025;font-family:'Lato',sans-serif;font-size:.82rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 20px rgba(201,168,76,.35);transition:transform .15s ease,box-shadow .15s ease;}
+.welcome-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.45);}
+
+@media(min-width:480px){
+  .daily-verse-text{font-size:1.1rem;}
+  .cat-card .cat-name{font-size:1rem;}
+  .verse-text{font-size:1.05rem;}
+  .overlay-text{font-size:1.4rem;}
 }
   </style>
 </head>
 <body>
 
+  <audio id="verse-audio" loop preload="auto">
+    <source src="Marvin_Sapp__He_Has_His_Hands_On_You__Live_.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="toast"></div>
+
   <!-- WELCOME POPUP -->
-  <div id="welcome-popup" role="dialog" aria-modal="true" aria-label="Welcome message">
+  <div id="welcome-popup" role="dialog" aria-modal="true">
     <div class="welcome-verse-top">
       <p class="welcome-top-text">"For I know the plans I have for you, plans to prosper you and not to harm you, plans to give you hope and a future."</p>
       <span class="welcome-top-ref">Jeremiah 29:11</span>
@@ -648,17 +201,45 @@ body {
         <button class="welcome-btn" id="welcome-btn">✦ &nbsp;Enter &amp; Explore</button>
       </div>
     </div>
-  </div><!-- /.welcome-verse-top -->
+  </div>
 
   <!-- VERSE FOCUS OVERLAY -->
-  <div id="verse-overlay" role="dialog" aria-modal="true" aria-label="Verse focus view">
+  <div id="verse-overlay" role="dialog" aria-modal="true">
     <div class="overlay-bg" id="overlay-bg"></div>
     <div class="overlay-blur"></div>
     <div class="overlay-content">
       <span class="overlay-ref" id="overlay-ref"></span>
       <p class="overlay-text" id="overlay-text"></p>
-      <button class="overlay-close" id="overlay-close">✕ &nbsp;Close</button>
+      <div class="overlay-actions">
+        <button class="overlay-aloud-btn" id="overlay-aloud-btn">🔊 Read Aloud</button>
+        <button class="overlay-share-btn" id="overlay-share-btn">↗ Share</button>
+        <button class="overlay-close" id="overlay-close">✕ Close</button>
+      </div>
     </div>
+  </div>
+
+  <!-- QUIZ MODAL -->
+  <div id="quiz-modal" role="dialog" aria-modal="true">
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-label">📖 Bible Quiz</span>
+        <span class="quiz-score" id="quiz-score">0 / 0</span>
+      </div>
+      <div id="quiz-body"></div>
+      <div class="quiz-footer">
+        <button class="quiz-close-btn" id="quiz-close-btn">✕ Close</button>
+        <button class="quiz-next-btn" id="quiz-next-btn">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY PANEL -->
+  <div id="story-panel">
+    <div class="story-header">
+      <span class="story-title" id="story-title">📖 Bible Stories</span>
+      <button class="story-close-btn" id="story-close-btn">✕ Close</button>
+    </div>
+    <div class="story-body" id="story-body"></div>
   </div>
 
   <!-- HOME SCREEN -->
@@ -666,28 +247,56 @@ body {
     <header class="app-header">
       <span class="header-cross">✝</span>
     </header>
-    <div class="hero-verse">
-      <p>"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."</p>
-      <span class="hero-ref">John 3:16</span>
+
+    <!-- Daily Verse -->
+    <div class="daily-verse-block" id="daily-verse-block">
+      <div class="daily-label">✦ <span>Verse of the Day</span></div>
+      <p class="daily-verse-text" id="daily-verse-text"></p>
+      <span class="daily-verse-ref" id="daily-verse-ref"></span>
     </div>
+
+    <!-- Progress -->
+    <div class="progress-block">
+      <div class="progress-header">
+        <span class="progress-label">📚 Verses Read</span>
+        <span class="progress-count" id="progress-count">0 / 50</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Favourites -->
+    <div id="favourites-section">
+      <p class="section-label">❤️ My Favourites</p>
+      <div class="fav-scroll" id="fav-scroll"></div>
+    </div>
+
     <p class="section-label">Browse by topic</p>
     <div class="category-grid" id="category-grid"></div>
   </div>
 
   <!-- VERSE PAGE -->
-  <div id="verse-page" class="page" role="region" aria-label="Verse list">
+  <div id="verse-page" class="page" role="region">
     <div class="page-header">
       <div class="page-nav">
-        <button class="back-btn" id="back-btn"><span>&#8592;</span> Back</button>
+        <button class="back-btn" id="back-btn">&#8592; Back</button>
         <button class="home-btn" id="home-btn">&#8962; Home</button>
       </div>
       <span class="page-icon" id="page-icon"></span>
       <h2 class="page-title" id="page-title"></h2>
     </div>
+    <div class="page-actions">
+      <button class="page-action-btn quiz-trigger-btn" id="quiz-trigger-btn">🧠 Take Quiz</button>
+      <button class="page-action-btn story-trigger-btn" id="story-trigger-btn">📖 Bible Stories</button>
+    </div>
     <div class="verse-list" id="verse-list"></div>
   </div>
 
   <script>
+// ═══════════════════════════════════════
+// VERSES DATA
+// ═══════════════════════════════════════
 /**
  * verses.js
  * ─────────────────────────────────────────────────────────────
@@ -1012,132 +621,322 @@ const CATEGORIES = [
     ]
   }
 ];
-  </script>
-  <script>
-/**
- * app.js
- * ─────────────────────────────────────────────────────────────
- * Youth Day Bible Verses — Application Logic
- * ─────────────────────────────────────────────────────────────
- */
 
+// ═══════════════════════════════════════
+// APP LOGIC
+// ═══════════════════════════════════════
 (function () {
   "use strict";
 
-  /* ── Bible story background images (Unsplash — free to use) ── */
+  // ── Story content per category ──
+  const STORIES = {
+    strength: [
+      { emoji:"⚔️", title:"Joshua Crosses the Jordan", text:"God commanded Joshua to lead Israel across the Jordan River into the Promised Land. Though the task seemed impossible, Joshua obeyed and God parted the waters, showing that courage rooted in faith moves mountains." },
+      { emoji:"🦁", title:"David & Goliath", text:"Young David faced the giant Goliath with only a sling and five stones — but most of all, with unshakeable faith. His courage came not from his own strength but from his trust in the living God." }
+    ],
+    identity: [
+      { emoji:"🌟", title:"Jeremiah the Prophet", text:"Before Jeremiah was born, God told him: 'I knew you before I formed you.' God has a unique calling for every person — our identity is rooted in being known and loved by our Creator." },
+      { emoji:"🏺", title:"The Potter & the Clay", text:"God showed Jeremiah a potter reshaping a marred vessel into something beautiful. We are like clay in God's hands — He moulds our identity with purpose and love." }
+    ],
+    guidance: [
+      { emoji:"🧭", title:"Solomon Asks for Wisdom", text:"When God offered Solomon anything he wished, Solomon chose wisdom over riches or power. God was so pleased that He gave Solomon wisdom AND blessings — showing that seeking God's guidance first leads to fullness of life." },
+      { emoji:"🕯️", title:"The Psalms of David", text:"David wrote Psalm 119 as a love letter to God's Word, calling it a lamp to his feet. In every battle and trial, David returned to Scripture for direction — a model for us today." }
+    ],
+    hope: [
+      { emoji:"🕊️", title:"Noah & the Rainbow", text:"After the flood, God placed a rainbow in the sky as a covenant of hope. No matter how dark the storm, God's promises are written across the heavens for all to see." },
+      { emoji:"⛓️", title:"Joseph in the Prison", text:"Joseph was betrayed, sold, and imprisoned — yet never abandoned by God. His story reminds us that what looks like the end is often just the beginning of God's greater plan." }
+    ],
+    friendship: [
+      { emoji:"🤝", title:"David & Jonathan", text:"Jonathan loved David as himself and made a covenant of friendship with him. In a world of competition and jealousy, their bond shows us what true, selfless friendship looks like." },
+      { emoji:"👭", title:"Ruth & Naomi", text:"Ruth told Naomi: 'Where you go, I will go.' This loyal friendship across generations and cultures is one of the most beautiful pictures of covenant love in all of Scripture." }
+    ],
+    challenges: [
+      { emoji:"🔥", title:"Shadrach, Meshach & Abednego", text:"Three young men refused to bow to an idol and were thrown into a furnace. The king looked in and saw four figures walking in the fire — the fourth like a Son of God. When we face our fiercest trials, we are never alone." },
+      { emoji:"🐋", title:"Jonah & the Great Fish", text:"Jonah ran from God's call, but even in the belly of a great fish, God heard his prayer. No circumstance — not even our own mistakes — can put us beyond the reach of God's mercy." }
+    ],
+    positive: [
+      { emoji:"☀️", title:"The Beatitudes", text:"Jesus sat on a mountainside and declared blessed those whom the world overlooks — the meek, the mourning, the merciful. Joy, He taught, is not the absence of hardship but the presence of God." },
+      { emoji:"🎶", title:"Paul & Silas in Prison", text:"Beaten and chained at midnight, Paul and Silas sang hymns of praise. Their joy was not circumstantial — it was rooted in something unshakeable. The prison doors flew open." }
+    ],
+    love: [
+      { emoji:"❤️", title:"The Prodigal Son", text:"A father saw his lost son returning from a distance and ran to embrace him. This parable captures the heart of God's love — extravagant, unconditional, and always ready to restore the wanderer." },
+      { emoji:"✝️", title:"The Cross", text:"John 3:16 is the centre of history. God so loved the world that He gave His only Son. The cross is not a symbol of defeat — it is the greatest act of love the universe has ever witnessed." }
+    ],
+    following: [
+      { emoji:"🙏", title:"Abraham's Obedience", text:"God called Abraham to leave everything familiar and go to a land he could not see. Abraham obeyed, not knowing where he was going — and became the father of faith for all generations." },
+      { emoji:"🌊", title:"Peter Walks on Water", text:"Peter stepped out of the boat at Jesus' invitation and walked on water — until he took his eyes off Jesus. Following God's will begins with one brave step of trust, then keeping our eyes fixed on Him." }
+    ]
+  };
+
+  // ── Background images for overlay ──
   const STORY_IMAGES = [
-    "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1200&q=80", // light through clouds
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80", // open road/path
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80", // starry sky
-    "https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=1200&q=80", // ocean/sea
-    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80", // sunrise landscape
-    "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80", // green valley
-    "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&q=80", // person on mountain
-    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80", // rocky mountain
-    "https://images.unsplash.com/photo-1444080748397-f442aa105c06?w=1200&q=80", // desert stars
-    "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1200&q=80", // golden wheat field
+    "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1200&q=80",
+    "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80",
+    "https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=1200&q=80",
+    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80",
+    "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80",
+    "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&q=80",
+    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80",
+    "https://images.unsplash.com/photo-1444080748397-f442aa105c06?w=1200&q=80",
+    "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1200&q=80",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80"
   ];
 
-  /* ── DOM references ── */
-  const grid        = document.getElementById("category-grid");
-  const versePage   = document.getElementById("verse-page");
-  const backBtn     = document.getElementById("back-btn");
-  const pageIcon    = document.getElementById("page-icon");
-  const pageTitle   = document.getElementById("page-title");
-  const verseList   = document.getElementById("verse-list");
-  const homeBtn     = document.getElementById("home-btn");
-  const overlay     = document.getElementById("verse-overlay");
-  const overlayBg   = document.getElementById("overlay-bg");
-  const overlayRef  = document.getElementById("overlay-ref");
-  const overlayText = document.getElementById("overlay-text");
-  const overlayClose= document.getElementById("overlay-close");
-  const welcomePopup= document.getElementById("welcome-popup");
-  const welcomeBtn  = document.getElementById("welcome-btn");
+  // ── DOM refs ──
+  var grid          = document.getElementById("category-grid");
+  var versePage     = document.getElementById("verse-page");
+  var backBtn       = document.getElementById("back-btn");
+  var homeBtn       = document.getElementById("home-btn");
+  var pageIcon      = document.getElementById("page-icon");
+  var pageTitle     = document.getElementById("page-title");
+  var verseList     = document.getElementById("verse-list");
+  var overlay       = document.getElementById("verse-overlay");
+  var overlayBg     = document.getElementById("overlay-bg");
+  var overlayRef    = document.getElementById("overlay-ref");
+  var overlayText   = document.getElementById("overlay-text");
+  var overlayClose  = document.getElementById("overlay-close");
+  var overlayAloud  = document.getElementById("overlay-aloud-btn");
+  var overlayShare  = document.getElementById("overlay-share-btn");
+  var welcomePopup  = document.getElementById("welcome-popup");
+  var welcomeBtn    = document.getElementById("welcome-btn");
+  var verseAudio    = document.getElementById("verse-audio");
+  var quizModal     = document.getElementById("quiz-modal");
+  var quizBody      = document.getElementById("quiz-body");
+  var quizScore     = document.getElementById("quiz-score");
+  var quizCloseBtn  = document.getElementById("quiz-close-btn");
+  var quizNextBtn   = document.getElementById("quiz-next-btn");
+  var quizTrigger   = document.getElementById("quiz-trigger-btn");
+  var storyPanel    = document.getElementById("story-panel");
+  var storyBody     = document.getElementById("story-body");
+  var storyTitle    = document.getElementById("story-title");
+  var storyClose    = document.getElementById("story-close-btn");
+  var storyTrigger  = document.getElementById("story-trigger-btn");
+  var toastEl       = document.getElementById("toast");
+  var progressBar   = document.getElementById("progress-bar-fill");
+  var progressCount = document.getElementById("progress-count");
+  var favSection    = document.getElementById("favourites-section");
+  var favScroll     = document.getElementById("fav-scroll");
+  var dailyText     = document.getElementById("daily-verse-text");
+  var dailyRef      = document.getElementById("daily-verse-ref");
 
-  /* ── Welcome popup: show on load ── */
-  setTimeout(function () {
-    welcomePopup.classList.add("active");
-  }, 300);
+  // ── State ──
+  var currentCatId  = null;
+  var readVerses    = JSON.parse(localStorage.getItem("readVerses") || "[]");
+  var favourites    = JSON.parse(localStorage.getItem("favourites") || "[]");
+  var quizState     = { questions:[], index:0, score:0, answered:false };
+  var speechUtter   = null;
 
-  welcomeBtn.addEventListener("click", function () {
-    welcomePopup.classList.remove("active");
-  });
+  // ── Toast ──
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    setTimeout(function(){ toastEl.classList.remove("show"); }, 2400);
+  }
 
-  /* Close popup if clicking backdrop */
-  welcomePopup.addEventListener("click", function (e) {
-    if (e.target === welcomePopup) {
-      welcomePopup.classList.remove("active");
+  // ── Daily Verse (deterministic by day) ──
+  function setupDailyVerse() {
+    var all = [];
+    CATEGORIES.forEach(function(cat){ cat.verses.forEach(function(v){ all.push(v); }); });
+    var day = Math.floor(Date.now() / 86400000);
+    var v = all[day % all.length];
+    dailyText.textContent = "\u201C" + v.text + "\u201D";
+    dailyRef.textContent  = v.ref;
+  }
+
+  // ── Progress ──
+  function saveProgress(ref) {
+    if (readVerses.indexOf(ref) === -1) {
+      readVerses.push(ref);
+      localStorage.setItem("readVerses", JSON.stringify(readVerses));
     }
-  });
+    updateProgressUI();
+  }
 
-  /* ── Build the category index grid ── */
+  function updateProgressUI() {
+    var total = 0;
+    CATEGORIES.forEach(function(c){ total += c.verses.length; });
+    var pct = Math.round((readVerses.length / total) * 100);
+    progressBar.style.width = pct + "%";
+    progressCount.textContent = readVerses.length + " / " + total;
+    // Update mini bars on cat cards
+    CATEGORIES.forEach(function(cat){
+      var card = document.querySelector('[data-id="' + cat.id + '"]');
+      if (!card) return;
+      var fill = card.querySelector(".cat-progress-mini-fill");
+      if (!fill) return;
+      var catRead = cat.verses.filter(function(v){ return readVerses.indexOf(v.ref) !== -1; }).length;
+      fill.style.width = Math.round((catRead / cat.verses.length) * 100) + "%";
+    });
+  }
+
+  // ── Favourites ──
+  function toggleFav(ref, text) {
+    var idx = favourites.findIndex(function(f){ return f.ref === ref; });
+    if (idx === -1) {
+      favourites.push({ ref:ref, text:text });
+      showToast("❤️ Added to favourites");
+    } else {
+      favourites.splice(idx, 1);
+      showToast("Removed from favourites");
+    }
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+    renderFavourites();
+    updateFavBtns();
+  }
+
+  function isFav(ref) {
+    return favourites.some(function(f){ return f.ref === ref; });
+  }
+
+  function updateFavBtns() {
+    document.querySelectorAll(".fav-btn").forEach(function(btn){
+      btn.textContent = isFav(btn.dataset.ref) ? "❤️" : "🤍";
+    });
+  }
+
+  function renderFavourites() {
+    if (favourites.length === 0) { favSection.style.display = "none"; return; }
+    favSection.style.display = "block";
+    favScroll.innerHTML = "";
+    favourites.forEach(function(f){
+      var chip = document.createElement("div");
+      chip.className = "fav-chip";
+      chip.innerHTML = '<span>' + f.ref + '</span><span class="fav-remove" data-ref="' + f.ref + '">✕</span>';
+      chip.querySelector(".fav-remove").addEventListener("click", function(e){
+        e.stopPropagation();
+        toggleFav(f.ref, f.text);
+      });
+      chip.addEventListener("click", function(){
+        // Find and open this verse
+        CATEGORIES.forEach(function(cat){
+          cat.verses.forEach(function(v, idx){
+            if (v.ref === f.ref) {
+              openPage(cat.id);
+              setTimeout(function(){
+                openOverlay(v.ref, v.text, STORY_IMAGES[idx % STORY_IMAGES.length]);
+              }, 400);
+            }
+          });
+        });
+      });
+      favScroll.appendChild(chip);
+    });
+  }
+
+  // ── Music helpers ──
+  function startMusic() {
+    verseAudio.volume = 0;
+    verseAudio.currentTime = 0;
+    var playPromise = verseAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(function(){
+        fadeAudio(verseAudio, 0, 0.6, 1500);
+      }).catch(function(){
+        // Autoplay blocked — wait for first tap then play
+        document.addEventListener("click", function tryPlay(){
+          verseAudio.play().then(function(){ fadeAudio(verseAudio, 0, 0.6, 1500); }).catch(function(){});
+          document.removeEventListener("click", tryPlay);
+        }, { once: true });
+      });
+    }
+  }
+
+  function stopMusic() {
+    fadeAudio(verseAudio, verseAudio.volume, 0, 800, function(){
+      verseAudio.pause();
+      verseAudio.currentTime = 0;
+    });
+  }
+
+  function showWelcomePopup() {
+    welcomePopup.classList.add("active");
+    startMusic();
+  }
+
+  function hideWelcomePopup() {
+    welcomePopup.classList.remove("active");
+    stopMusic();
+  }
+
+  // ── Welcome popup ──
+  setTimeout(function(){ showWelcomePopup(); }, 300);
+  welcomeBtn.addEventListener("click", function(){ hideWelcomePopup(); });
+  welcomePopup.addEventListener("click", function(e){ if (e.target === welcomePopup) hideWelcomePopup(); });
+
+  // ── Build category grid ──
   function buildGrid() {
-    CATEGORIES.forEach(function (cat) {
-      const card = document.createElement("div");
+    CATEGORIES.forEach(function(cat){
+      var card = document.createElement("div");
       card.className = "cat-card" + (cat.fullWidth ? " full-width" : "");
       card.style.setProperty("--cat-color", cat.color);
       card.setAttribute("data-id", cat.id);
       card.setAttribute("role", "button");
       card.setAttribute("tabindex", "0");
-      card.setAttribute("aria-label", "Open " + cat.title.replace(/&amp;/g, "&"));
-
       card.innerHTML =
         '<span class="cat-icon">' + cat.icon + '</span>' +
         '<div class="cat-name">' + cat.title + '</div>' +
-        '<span class="cat-count">' + cat.verses.length + ' Verse' + (cat.verses.length !== 1 ? 's' : '') + '</span>';
-
-      card.addEventListener("click", function () { openPage(cat.id); });
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") openPage(cat.id);
-      });
-
+        '<span class="cat-count">' + cat.verses.length + ' Verse' + (cat.verses.length !== 1 ? 's' : '') + '</span>' +
+        '<span class="cat-progress-mini"><span class="cat-progress-mini-fill" style="width:0%"></span></span>';
+      card.addEventListener("click", function(){ openPage(cat.id); });
+      card.addEventListener("keydown", function(e){ if (e.key==="Enter"||e.key===" ") openPage(cat.id); });
       grid.appendChild(card);
     });
   }
 
-  /* ── Open a category verse page ── */
+  // ── Open verse page ──
   function openPage(id) {
-    const cat = CATEGORIES.find(function (c) { return c.id === id; });
+    var cat = CATEGORIES.find(function(c){ return c.id === id; });
     if (!cat) return;
-
-    pageIcon.textContent  = cat.icon;
-    pageTitle.innerHTML   = cat.title.replace(/&amp;/g, "&<br>");
-
-    verseList.innerHTML = "";
-    cat.verses.forEach(function (v, idx) {
-      const card = document.createElement("div");
+    currentCatId = id;
+    pageIcon.textContent = cat.icon;
+    pageTitle.innerHTML  = cat.title.replace(/&amp;/g, "&<br>");
+    verseList.innerHTML  = "";
+    cat.verses.forEach(function(v, idx){
+      var card = document.createElement("div");
       card.className = "verse-card";
       card.setAttribute("data-num", v.num);
-      card.setAttribute("role", "button");
-      card.setAttribute("tabindex", "0");
-      card.setAttribute("aria-label", "Focus on " + v.ref);
-
+      var imgUrl = STORY_IMAGES[idx % STORY_IMAGES.length];
       card.innerHTML =
         '<div class="verse-ref">' + v.ref + '</div>' +
         '<p class="verse-text">' + v.text + '</p>' +
-        '<span class="verse-tap-hint">✦ Tap to focus</span>';
-
-      /* Pick a background image for this verse */
-      const imgUrl = STORY_IMAGES[idx % STORY_IMAGES.length];
-
-      card.addEventListener("click", function () {
+        '<div class="verse-actions">' +
+          '<span class="verse-tap-hint">✦ Tap to focus</span>' +
+          '<button class="fav-btn" data-ref="' + v.ref + '" title="Favourite">' + (isFav(v.ref) ? "❤️" : "🤍") + '</button>' +
+          '<button class="read-aloud-btn" title="Read aloud">🔊</button>' +
+          '<button class="share-btn" title="Share">↗</button>' +
+        '</div>';
+      // Tap card → overlay
+      card.addEventListener("click", function(e){
+        if (e.target.classList.contains("fav-btn") ||
+            e.target.classList.contains("read-aloud-btn") ||
+            e.target.classList.contains("share-btn")) return;
         openOverlay(v.ref, v.text, imgUrl);
+        saveProgress(v.ref);
       });
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") openOverlay(v.ref, v.text, imgUrl);
+      // Fav button
+      card.querySelector(".fav-btn").addEventListener("click", function(e){
+        e.stopPropagation();
+        toggleFav(v.ref, v.text);
       });
-
+      // Read aloud
+      card.querySelector(".read-aloud-btn").addEventListener("click", function(e){
+        e.stopPropagation();
+        speakVerse(v.ref + ". " + v.text, e.currentTarget);
+      });
+      // Share
+      card.querySelector(".share-btn").addEventListener("click", function(e){
+        e.stopPropagation();
+        shareVerse(v.ref, v.text);
+      });
       verseList.appendChild(card);
     });
-
     versePage.classList.add("active");
     versePage.scrollTop = 0;
     document.body.style.overflow = "hidden";
-
-    history.pushState({ page: id }, "", "#" + id);
+    safePushState({ page:id }, "", "#" + id);
   }
 
-  /* ── Open full-screen verse overlay ── */
+  // ── Overlay ──
   function openOverlay(ref, text, imgUrl) {
     overlayBg.style.backgroundImage = "url('" + imgUrl + "')";
     overlayRef.textContent  = ref;
@@ -1146,50 +945,196 @@ const CATEGORIES = [
     document.body.style.overflow = "hidden";
   }
 
-  /* ── Close the verse overlay ── */
   function closeOverlay() {
     overlay.classList.remove("active");
+    stopSpeech();
+    overlayAloud.classList.remove("speaking");
+    overlayAloud.textContent = "🔊 Read Aloud";
   }
 
   overlayClose.addEventListener("click", closeOverlay);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) closeOverlay(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") { closeOverlay(); closeQuiz(); } });
 
-  overlay.addEventListener("click", function (e) {
-    if (e.target === overlay) closeOverlay();
+  // Read aloud on overlay
+  overlayAloud.addEventListener("click", function(){
+    if (speechSynthesis.speaking) { stopSpeech(); overlayAloud.classList.remove("speaking"); overlayAloud.textContent = "🔊 Read Aloud"; return; }
+    speakVerse(overlayRef.textContent + ". " + overlayText.textContent, null, function(){
+      overlayAloud.classList.remove("speaking");
+      overlayAloud.textContent = "🔊 Read Aloud";
+    });
+    overlayAloud.classList.add("speaking");
+    overlayAloud.textContent = "⏹ Stop";
   });
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeOverlay();
+  // Share on overlay
+  overlayShare.addEventListener("click", function(){
+    shareVerse(overlayRef.textContent, overlayText.textContent);
   });
 
-  /* ── Close the verse page ── */
+  // ── Read Aloud helper ──
+  function speakVerse(text, btn, onEnd) {
+    stopSpeech();
+    if (!window.speechSynthesis) { showToast("Speech not supported on this device"); return; }
+    speechUtter = new SpeechSynthesisUtterance(text);
+    speechUtter.rate = 0.88;
+    speechUtter.pitch = 1.05;
+    speechUtter.onend = function(){
+      if (btn) { btn.classList.remove("speaking"); btn.textContent = "🔊"; }
+      if (onEnd) onEnd();
+    };
+    speechSynthesis.speak(speechUtter);
+    if (btn) { btn.classList.add("speaking"); btn.textContent = "⏹"; }
+  }
+
+  function stopSpeech() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+  }
+
+  // ── Share helper ──
+  function shareVerse(ref, text) {
+    var msg = "\u201C" + text + "\u201D\n— " + ref + "\n\n#GodsWordForYouth";
+    if (navigator.share) {
+      navigator.share({ title:"God's Word for Youth", text:msg }).catch(function(){});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(msg).then(function(){ showToast("📋 Verse copied!"); });
+    } else {
+      showToast("Copy: " + ref);
+    }
+  }
+
+  // ── Audio fade ──
+  function fadeAudio(audio, fromVol, toVol, ms, onDone) {
+    var steps = 30, stepTime = ms / steps, delta = (toVol - fromVol) / steps, cur = fromVol, i = 0;
+    var t = setInterval(function(){
+      cur += delta;
+      audio.volume = Math.min(1, Math.max(0, cur));
+      if (++i >= steps) { clearInterval(t); audio.volume = toVol; if (onDone) onDone(); }
+    }, stepTime);
+  }
+
+  // ── Close verse page ──
   function closePage() {
     versePage.classList.remove("active");
     document.body.style.overflow = "";
+    stopSpeech();
   }
 
-  backBtn.addEventListener("click", function () {
+  function safePushState(state, title, url) {
+    try { history.pushState(state, title, url); } catch(e) {}
+  }
+
+  backBtn.addEventListener("click", function(){
     closePage();
-    history.back();
+    try { history.back(); } catch(e) {}
+  });
+  homeBtn.addEventListener("click", function(){
+    closePage();
+    window.scrollTo({ top:0, behavior:"smooth" });
+    setTimeout(function(){ showWelcomePopup(); }, 350);
   });
 
-  homeBtn.addEventListener("click", function () {
-    closePage();
-    window.location.hash = "";
-    window.scrollTo(0, 0);
-  });
+  window.addEventListener("popstate", function(e){ if (!e.state || !e.state.page) closePage(); });
 
-  window.addEventListener("popstate", function (e) {
-    if (!e.state || !e.state.page) {
-      closePage();
+  // ── Quiz ──
+  function buildQuiz(catId) {
+    var cat = CATEGORIES.find(function(c){ return c.id === catId; });
+    if (!cat) return;
+    var pool = cat.verses.slice();
+    // Build questions: "Which verse says...?" → 4 options (refs)
+    var allRefs = [];
+    CATEGORIES.forEach(function(c){ c.verses.forEach(function(v){ allRefs.push(v.ref); }); });
+    quizState.questions = pool.map(function(v){
+      var wrong = allRefs.filter(function(r){ return r !== v.ref; }).sort(function(){ return Math.random()-.5; }).slice(0,3);
+      var opts = wrong.concat([v.ref]).sort(function(){ return Math.random()-.5; });
+      return { question:"\u201C" + v.text.substring(0,80) + (v.text.length>80?"...":"") + "\u201D", answer:v.ref, options:opts };
+    });
+    quizState.index = 0;
+    quizState.score = 0;
+    quizState.answered = false;
+    showQuizQuestion();
+    quizModal.classList.add("active");
+  }
+
+  function showQuizQuestion() {
+    var q = quizState.questions[quizState.index];
+    if (!q) { showQuizResult(); return; }
+    quizScore.textContent = quizState.score + " / " + quizState.questions.length;
+    quizNextBtn.classList.remove("show");
+    quizState.answered = false;
+    quizBody.innerHTML =
+      '<p class="quiz-question">' + q.question + '</p>' +
+      '<div class="quiz-options">' +
+        q.options.map(function(opt){
+          return '<button class="quiz-option" data-ans="' + opt + '">' + opt + '</button>';
+        }).join("") +
+      '</div>';
+    quizBody.querySelectorAll(".quiz-option").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        if (quizState.answered) return;
+        quizState.answered = true;
+        var chosen = btn.dataset.ans;
+        var correct = quizState.questions[quizState.index].answer;
+        if (chosen === correct) { btn.classList.add("correct"); quizState.score++; showToast("✅ Correct!"); }
+        else {
+          btn.classList.add("wrong");
+          quizBody.querySelectorAll(".quiz-option").forEach(function(b){ if (b.dataset.ans===correct) b.classList.add("correct"); });
+          showToast("❌ The answer was " + correct);
+        }
+        quizScore.textContent = quizState.score + " / " + quizState.questions.length;
+        quizNextBtn.classList.add("show");
+      });
+    });
+  }
+
+  function showQuizResult() {
+    var pct = Math.round((quizState.score / quizState.questions.length) * 100);
+    var emoji = pct === 100 ? "🏆" : pct >= 60 ? "🌟" : "📖";
+    var msg = pct === 100 ? "Perfect score! Amazing!" : pct >= 60 ? "Great job! Keep studying!" : "Keep reading — you'll get there!";
+    quizBody.innerHTML = '<div class="quiz-result"><span class="quiz-result-emoji">' + emoji + '</span><p class="quiz-result-text">' + msg + '</p><span class="quiz-result-score">' + quizState.score + ' out of ' + quizState.questions.length + ' correct (' + pct + '%)</span></div>';
+    quizNextBtn.classList.remove("show");
+  }
+
+  quizNextBtn.addEventListener("click", function(){ quizState.index++; showQuizQuestion(); });
+  function closeQuiz() { quizModal.classList.remove("active"); }
+  quizCloseBtn.addEventListener("click", closeQuiz);
+  quizTrigger.addEventListener("click", function(){ if (currentCatId) buildQuiz(currentCatId); });
+
+  // ── Story Panel ──
+  function openStories(catId) {
+    var cat = CATEGORIES.find(function(c){ return c.id === catId; });
+    var stories = STORIES[catId] || [];
+    storyTitle.textContent = (cat ? cat.icon + " " : "") + "Bible Stories";
+    storyBody.innerHTML = "";
+    if (stories.length === 0) {
+      storyBody.innerHTML = '<p style="color:var(--muted);padding:20px;text-align:center;">Stories coming soon for this category!</p>';
+    } else {
+      stories.forEach(function(s){
+        var card = document.createElement("div");
+        card.className = "story-card";
+        card.innerHTML =
+          '<div class="story-card-img-placeholder">' + s.emoji + '</div>' +
+          '<div class="story-card-body"><h3 class="story-card-title">' + s.title + '</h3><p class="story-card-text">' + s.text + '</p></div>';
+        storyBody.appendChild(card);
+      });
     }
-  });
+    storyPanel.classList.add("active");
+  }
 
+  storyTrigger.addEventListener("click", function(){ if (currentCatId) openStories(currentCatId); });
+  storyClose.addEventListener("click", function(){ storyPanel.classList.remove("active"); });
+
+  // ── Deep link on load ──
   function handleInitialHash() {
-    const hash = window.location.hash.replace("#", "");
+    var hash = window.location.hash.replace("#", "");
     if (hash) openPage(hash);
   }
 
+  // ── Init ──
   buildGrid();
+  setupDailyVerse();
+  updateProgressUI();
+  renderFavourites();
   handleInitialHash();
 
 })();
