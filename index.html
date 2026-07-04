@@ -24,6 +24,8 @@ body{font-family:'Lato',sans-serif;background:var(--deep);color:var(--light);min
 .app-header{background:linear-gradient(160deg,#2D1F45 0%,#1A1025 60%,#0D0819 100%);padding:36px 24px 20px;text-align:center;position:relative;overflow:hidden;}
 .app-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.18) 0%,transparent 70%);pointer-events:none;}
 .header-cross{font-size:2rem;color:var(--gold);display:block;filter:drop-shadow(0 0 12px rgba(201,168,76,.5));}
+.main-home-btn{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);border-radius:100px;color:var(--gold);font-family:'Lato',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:7px 14px;transition:background .15s ease;}
+.main-home-btn:hover{background:rgba(201,168,76,.25);}
 
 /* ── Daily Verse ── */
 .daily-verse-block{margin:14px 16px 0;border-radius:var(--radius);padding:20px 20px 16px;border:1px solid rgba(201,168,76,.25);background:linear-gradient(135deg,#2D1F45,#1A1025);position:relative;overflow:hidden;}
@@ -246,6 +248,7 @@ body{font-family:'Lato',sans-serif;background:var(--deep);color:var(--light);min
   <div id="home-screen">
     <header class="app-header">
       <span class="header-cross">✝</span>
+      <button class="main-home-btn" id="main-home-btn">🙏 Welcome</button>
     </header>
 
     <!-- Daily Verse -->
@@ -857,6 +860,11 @@ const CATEGORIES = [
     welcomePopup.classList.remove("active");
     stopMusic();
   }
+
+  // ── Main page home button ──
+  document.getElementById("main-home-btn").addEventListener("click", function(){
+    showWelcomePopup();
+  });
 
   // ── Welcome popup ──
   setTimeout(function(){ showWelcomePopup(); }, 300);
